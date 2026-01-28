@@ -1,4 +1,4 @@
 import {z} from 'zod';
-export const accetMessageSchema = z.object({
-    acceptMessage : z.boolean()
+export const acceptMessageSchema = z.object({
+    acceptMessages : z.boolean()
 })

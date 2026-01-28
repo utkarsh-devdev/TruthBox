@@ -23,7 +23,7 @@ export async function GET(request: Request){
         try{
             const user = await UserModel.aggregate([
                 { $match: { _id: userId } },
-                { $unwind : "$messages"   },//opens the messages array and creates a document for each message and its parent user and then we can filter based on that
+                { $unwind : { path: "$messages", preserveNullAndEmptyArrays: true }   },//opens the messages array and creates a document for each message and its parent user and then we can filter based on that
                 { $sort: { "messages.createdAt": -1 } }, // Sort messages by createdAt in descending order
                 { $group: {
                     _id: "$_id",
@@ -38,7 +38,7 @@ export async function GET(request: Request){
             }
             return Response.json({
                 success: true,
-                messages: user[0].messages
+                messages: user[0].messages.filter((msg: any) => msg !== null)
             },{status : 200});
         }catch(error){
             console.error("Error fetching messages for user:", error);
