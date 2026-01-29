@@ -25,7 +25,7 @@ const VerifyAccount = () => {
                 code: data.code
             })
             toast.success(response.data.message);
-            router.replace('sign-in')
+            router.replace('/sign-in')
         } catch (error) {
             const axiosError = error as AxiosError<ApiResponse>;
             let erorMessage = axiosError.response?.data.message || 'An error occurred during sign up.';
